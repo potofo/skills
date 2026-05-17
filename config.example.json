@@ -1,0 +1,16 @@
+{
+  "skills_directory": "skills",
+  "output_directory": "output",
+  "article_title": "Claude Agent Skills完全ガイド：初学者のための実践的スキル解説",
+  "target_audience": "初学者",
+  "max_skill_description_length": 400,
+  "included_categories": [
+    "クリエイティブ&デザイン",
+    "開発&技術",
+    "ドキュメント処理",
+    "エンタープライズ&コミュニケーション",
+    "メタスキル"
+  ],
+  "log_level": "INFO",
+  "log_file": "logs/qiita_generator.log"
+}

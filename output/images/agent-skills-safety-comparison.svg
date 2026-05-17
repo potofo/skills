@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 450" width="880" height="450" font-family="Helvetica, Arial, sans-serif">
+  <title>Agent Skillsの提供元による信頼性比較</title>
+  <g>
+    <rect x="30" y="20" width="820" height="110" rx="12" ry="12" fill="#eef9ee" stroke="#39a05c" stroke-width="2"/>
+    <text x="440.0" y="42" font-size="15" font-weight="bold" text-anchor="middle" fill="#1f6b3a">公式 Agent Skills  ★★★★★</text>
+    <rect x="60" y="55" width="360" height="50" rx="8" ry="8" fill="#ffffff" stroke="#39a05c"/>
+    <text x="240.0" y="84.0" font-size="14" text-anchor="middle" fill="#222222">Anthropic / OpenAI / Google</text>
+    <rect x="460" y="55" width="360" height="50" rx="8" ry="8" fill="#ffffff" stroke="#39a05c"/>
+    <text x="640.0" y="84.0" font-size="14" text-anchor="middle" fill="#222222">監査済み・継続メンテ</text>
+  </g>
+  <g>
+    <rect x="30" y="160" width="820" height="110" rx="12" ry="12" fill="#fff7d6" stroke="#c9a227" stroke-width="2"/>
+    <text x="440.0" y="182" font-size="15" font-weight="bold" text-anchor="middle" fill="#7a5a00">ベンダー提供 Agent Skills  ★★★★</text>
+    <rect x="60" y="195" width="360" height="50" rx="8" ry="8" fill="#ffffff" stroke="#c9a227"/>
+    <text x="240.0" y="224.0" font-size="14" text-anchor="middle" fill="#222222">Microsoft / AWS など</text>
+    <rect x="460" y="195" width="360" height="50" rx="8" ry="8" fill="#ffffff" stroke="#c9a227"/>
+    <text x="640.0" y="224.0" font-size="14" text-anchor="middle" fill="#222222">製品公式・依存に注意</text>
+  </g>
+  <g>
+    <rect x="30" y="300" width="820" height="110" rx="12" ry="12" fill="#ffe4e1" stroke="#c0392b" stroke-width="2"/>
+    <text x="440.0" y="322" font-size="15" font-weight="bold" text-anchor="middle" fill="#7a1f1f">野良 Agent Skills  ★</text>
+    <rect x="60" y="335" width="360" height="50" rx="8" ry="8" fill="#ffffff" stroke="#c0392b"/>
+    <text x="240.0" y="364.0" font-size="14" text-anchor="middle" fill="#222222">個人・非公式</text>
+    <rect x="460" y="335" width="360" height="50" rx="8" ry="8" fill="#ffffff" stroke="#c0392b"/>
+    <text x="640.0" y="364.0" font-size="14" text-anchor="middle" fill="#222222">監査なし・要検証</text>
+  </g>
+</svg>

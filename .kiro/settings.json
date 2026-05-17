@@ -1,0 +1,15 @@
+{
+  "agent": {
+    "trustedCommands": [
+      "python *",
+      "pip *",
+      "npm *",
+      "node *",
+      "git status",
+      "git diff *",
+      "git log *",
+      "ls *",
+      "dir"
+    ]
+  }
+}

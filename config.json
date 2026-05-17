@@ -1,0 +1,26 @@
+{
+  "skills_directory": "skills",
+  "output_directory": "output",
+  "article_title": "Claude Agent Skills完全ガイド：初学者のための実践的スキル解説",
+  "target_audience": "初学者",
+  "max_skill_description_length": 400,
+  "included_categories": [
+    "クリエイティブ&デザイン",
+    "開発&技術",
+    "ドキュメント処理",
+    "エンタープライズ&コミュニケーション",
+    "メタスキル"
+  ],
+  "log_level": "INFO",
+  "log_file": "logs/qiita_generator.log",
+  "translation_enabled": true,
+  "translation_provider": "openrouter",
+  "translation_model": "anthropic/claude-haiku-4.5",
+  "translation_api_key_env": "OPENROUTER_API_KEY",
+  "translation_target_language": "日本語",
+  "translation_cache_file": ".cache/translations.json",
+  "translation_base_url": "https://openrouter.ai/api/v1",
+  "translation_timeout_sec": 60,
+  "translation_http_referer": "https://github.com/anthropics/skills",
+  "translation_x_title": "qiita-skills-blog-generator"
+}

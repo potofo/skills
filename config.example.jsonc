@@ -1,0 +1,60 @@
+// =====================================================================
+// Qiita Skills Blog Generator - 設定ファイルサンプル（コメント付き）
+//
+// このファイルは JSONC（JSON with Comments）形式です。
+// 実際に使用する際は、コメント（//で始まる行）と末尾カンマを取り除いた
+// 純粋な JSON にして、`config.json` などの名前で保存してください。
+// または、コメントなしの `config.example.json` をコピーしてください。
+//
+// 実行例:
+//   python -m qiita_skills_blog_generator.main --config config.json
+//
+// すべての設定項目はオプションです。省略した項目はデフォルト値が使われます。
+// =====================================================================
+{
+  // スキルを走査する入力ディレクトリのパス。
+  // デフォルト: "skills"
+  "skills_directory": "skills",
+
+  // 生成された記事を保存する出力ディレクトリのパス。
+  // 存在しない場合は自動作成されます。
+  // デフォルト: "output"
+  "output_directory": "output",
+
+  // 記事のH1タイトル。出力ファイル名のスラッグにも反映されます。
+  // デフォルト: "Claude Agent Skills完全ガイド：初学者のための実践的スキル解説"
+  "article_title": "Claude Agent Skills完全ガイド：初学者のための実践的スキル解説",
+
+  // 想定読者。"初学者" / "中級者" / "上級者" のいずれか。
+  // デフォルト: "初学者"
+  "target_audience": "初学者",
+
+  // 各スキル説明（本文）の最大文字数。
+  // 100以上の整数を指定してください。これを超える説明は末尾に "..." を付けて切り詰められます。
+  // デフォルト: 400
+  "max_skill_description_length": 400,
+
+  // 記事に含めるスキルカテゴリ。指定しないカテゴリのスキルは記事から除外されます。
+  // 利用可能なカテゴリ:
+  //   "クリエイティブ&デザイン"               (algorithmic-art, canvas-design, frontend-design, theme-factory)
+  //   "開発&技術"                           (claude-api, mcp-builder, webapp-testing, web-artifacts-builder)
+  //   "ドキュメント処理"                       (docx, pdf, pptx, xlsx)
+  //   "エンタープライズ&コミュニケーション"   (brand-guidelines, doc-coauthoring, internal-comms, slack-gif-creator)
+  //   "メタスキル"                           (skill-creator)
+  // デフォルト: 全5カテゴリ
+  "included_categories": [
+    "クリエイティブ&デザイン",
+    "開発&技術",
+    "ドキュメント処理",
+    "エンタープライズ&コミュニケーション",
+    "メタスキル"
+  ],
+
+  // ログレベル。"DEBUG" / "INFO" / "WARNING" / "ERROR" / "CRITICAL" のいずれか。
+  // デフォルト: "INFO"
+  "log_level": "INFO",
+
+  // 実行ログの出力先ファイルパス。親ディレクトリは自動作成されます。
+  // デフォルト: "logs/qiita_generator.log"
+  "log_file": "logs/qiita_generator.log"
+}
