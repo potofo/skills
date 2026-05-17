@@ -14,7 +14,7 @@
 
 AI開発の世界では、大規模言語モデル（LLM）を活用したアプリケーション開発が急速に進化しています。その中でも、**Agent Skills**（エージェントスキル）は、AIエージェントに特定のタスクを効率的に実行させるための重要な仕組みとして注目を集めています。
 
-Agent Skillsは、AIエージェント（Claude、ChatGPT、Geminiなど）が特定のタスクを実行する際に参照する、指示やスクリプト、リソースをまとめたパッケージです。例えば、「ブランドガイドラインに沿った文書を作成する」「特定のワークフローでデータを分析する」「Word文書やPDFを操作する」といった専門的なタスクを、再現可能な方法で実行できるようにします。
+Agent Skillsは、AIエージェント（Claude Code、OpenAI Codex、Gemini CLIなどのCLI/IDE系開発エージェント）が特定のタスクを実行する際に参照する、指示やスクリプト、リソースをまとめたパッケージです。例えば、「ブランドガイドラインに沿った文書を作成する」「特定のワークフローでデータを分析する」「Word文書やPDFを操作する」といった専門的なタスクを、再現可能な方法で実行できるようにします。
 
 本記事では、**Anthropic社が公開しているClaude用Agent Skills**を初学者向けに解説します。クリエイティブ&デザイン、開発&技術、ドキュメント処理、エンタープライズ&コミュニケーション、メタスキルの5つのカテゴリに分類された全スキルについて、その目的、使用場面、主要な機能を分かりやすく紹介します。
 
@@ -110,7 +110,7 @@ Agent Skillsは、以下の環境で利用できます：
 
 | 利用環境 | 提供形態 | 補足 |
 |---|---|---|
-| Claude.ai | 有料プラン（Pro / Team）にプリインストール | UIから自動でスキルが選ばれる |
+| Claude.ai | 全プラン（Free / Pro / Max / Team / Enterprise）で利用可能（Code Execution有効化が前提） | UIから自動でスキルが選ばれる |
 | Claude Code | プラグインマーケットプレイス経由でインストール | `/plugin install <skill>@anthropic-agent-skills` |
 | Claude API | Skills API 経由でプログラムから利用 | カスタムスキルのアップロードも可能 |
 
@@ -162,7 +162,7 @@ Agent Skillsは段階的に展開されてきた仕組みで、概念の発表�
 |---|---|---|
 | 2025年10月16日（米国時間） | Anthropicが**Agent Skills**をClaude向け機能として初公開 | 「指示・スクリプト・リソースをAIエージェントが必要に応じて段階的に読み込む」という**Progressive Disclosure（段階的開示）**を中核設計とする概念を提唱 |
 | 2025年10月16日前後 | 公式GitHubリポジトリ [`anthropics/skills`](https://github.com/anthropics/skills) を公開 | `docx` / `xlsx` / `pdf` / `pptx` / `skill-creator` / `mcp-builder` / `frontend-design` などの推奨スキル群を提供開始。ドキュメント系4スキル（`docx`/`xlsx`/`pdf`/`pptx`）はClaude.aiのドキュメント作成機能の基盤として組み込まれた |
-| 2025年12月18日 | Agent Skillsを**オープン標準（open standard）**として公開 | 同時にClaudeのコネクタディレクトリ（claude.com/connectors）でAtlassian、Canva、Cloudflare、Figma、Notion、Ramp、Sentry、Zapier、Stripe、Vercelなどのパートナー製スキルを提供開始 |
+| 2025年12月18日 | Agent Skillsを**オープン標準（open standard）**として公開 | 同時にAgent Skillsディレクトリの初期パートナーとしてAtlassian、Canva、Cloudflare、Figma、Notion、Ramp、Sentryの7社のパートナー製スキルを提供開始（Zapier、Stripe等はMCPベースのConnectorsディレクトリ側のパートナー） |
 | 2026年4月7日時点 | 公式リポジトリは17スキル体制に拡大 | 本記事で扱うのもこの17スキル |
 
 ### Progressive Disclosureが解決する問題
@@ -346,7 +346,7 @@ Agent Skillsを効果的に利用・開発するためには、適切なソフ�
 | IDE | 提供元 | Agent Skills対応 | 企業内利用上の留意点 | 公式サイト |
 |---|---|---|---|---|
 | VSCode（Visual Studio Code） | Microsoft（公式） | 拡張機能経由でClaude APIと連携 | 無料。Claude API接続のためのインターネットアクセスが必要 | https://code.visualstudio.com/ |
-| Kiro | Anthropic（公式） | Agent Skillsをネイティブにサポート | Claude APIへのアクセスが必要。企業向けプランあり | https://www.anthropic.com/ |
+| Kiro | AWS（Amazon Web Services） | Agent Skillsをネイティブにサポート | Amazon Bedrock経由でClaude等のモデルを呼び出す。AWSアカウントが必要 | https://kiro.dev/ |
 | Cursor | Anysphere | Claude統合により利用可能 | 商用利用は要ライセンス確認 | https://www.cursor.com/ |
 | JetBrains IDEs（IntelliJ IDEA / PyCharm 等） | JetBrains | プラグイン経由でClaude APIと連携 | 商用利用は要ライセンス | https://www.jetbrains.com/ |
 
@@ -355,9 +355,9 @@ Agent Skillsを効果的に利用・開発するためには、適切なソフ�
 | CLI | 提供元 | Agent Skills対応 | 必要なAPIキー |
 |---|---|---|---|
 | Claude Code | Anthropic（公式） | プラグインマーケットプレイス経由でインストール | Anthropic APIキー |
-| Codex | OpenAI（公式） | OpenAI独自のAgent Skills形式に対応 | OpenAI APIキー |
-| Gemini CLI | Google（公式） | Google独自のAgent Skills形式に対応 | Google Cloud APIキー |
-| Kiro CLI | Anthropic（公式） | Agent Skillsをネイティブサポート | Anthropic APIキー |
+| Codex | OpenAI（公式） | Anthropic発のAgent Skillsオープン標準（agentskills.io）に準拠 | OpenAI APIキー |
+| Gemini CLI | Google（公式） | Anthropic発のAgent Skillsオープン標準（agentskills.io）に準拠 | Google Cloud APIキー |
+| Kiro CLI | AWS（Amazon Web Services） | Agent Skillsをネイティブサポート | AWSアカウント（Bedrock経由）。モデル設定によってはAnthropic APIキー |
 
 ### Agent Skillsを構築するための開発環境
 
@@ -622,7 +622,7 @@ Agent Skillsを活用することで、AIエージェントとの協働がより
 **参考リンク**:
 - Anthropic公式サイト: https://www.anthropic.com/
 - Claude API ドキュメント: https://docs.anthropic.com/
-- Agent Skills リポジトリ: https://github.com/anthropics/anthropic-agent-skills
+- Agent Skills リポジトリ: https://github.com/anthropics/skills
 - Agent Skills 仕様: https://agentskills.io/
 
 本記事が、Agent Skillsの理解と活用の一助となれば幸いです。
