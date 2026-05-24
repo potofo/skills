@@ -74,30 +74,7 @@ Agent Skillsは「段階的開示」という効率的な仕組みを採用し�
 | 2 | SKILL.md 本文 | スキルがトリガーされた時 | 理想は500行未満 | 詳細な指示・ガイドライン、使用例、ベストプラクティス |
 | 3 | バンドルリソース | 必要に応じて | 無制限 | 大規模なリファレンス、スクリプト、テンプレート、アセット |
 
-```mermaid
-flowchart TD
-    Q["ユーザーの依頼"] --> L1
-    subgraph L1["レベル1: メタデータ（常時ロード・約100語）"]
-        N1["スキル名 + description"]
-    end
-    L1 -->|"スキルがマッチ"| L2
-    subgraph L2["レベル2: SKILL.md 本文（オンデマンド・~500行）"]
-        N2["指示・ガイドライン\n使用例"]
-    end
-    L2 -->|"必要に応じて"| L3
-    subgraph L3["レベル3: バンドルリソース（必要時のみ・無制限）"]
-        N3a["scripts/"]
-        N3b["references/"]
-        N3c["assets/"]
-        N3d["templates/"]
-    end
-    classDef load fill:#fff7d6,stroke:#c9a227;
-    classDef ond fill:#e6f4ff,stroke:#2c7be5;
-    classDef opt fill:#eef9ee,stroke:#39a05c;
-    class L1 load;
-    class L2 ond;
-    class L3 opt;
-```
+![スキルリソース構造のフローチャート](images/スキルリソース構造のフローチャート２.png)
 
 *図: Agent Skillsの段階的開示（Progressive Disclosure）。AIエージェントは必要な情報だけを段階的に読み込みます。*
 
@@ -250,35 +227,7 @@ Anthropicが当初から強調しているのは、AIエージェントの**コ�
 | 6 | 依存関係 | 使用している外部ライブラリやツールは安全か？既知の脆弱性はないか？ |
 | 7 | 社内ポリシー整合性 | 自社のセキュリティポリシーに準拠しているか？情報セキュリティ部門の承認は取得済みか？ |
 
-```plantuml
-@startuml
-skinparam shadowing false
-skinparam ArrowColor #374151
-skinparam DefaultFontName Helvetica
-skinparam ActivityBackgroundColor<<official>> #DDF6E0
-skinparam ActivityBorderColor<<official>>     #1F6B3A
-skinparam ActivityBackgroundColor<<vendor>>   #FFF7D6
-skinparam ActivityBorderColor<<vendor>>       #C9A227
-skinparam ActivityBackgroundColor<<wild>>     #FFE4E1
-skinparam ActivityBorderColor<<wild>>         #C0392B
-
-start
-:Agent Skill を導入したい;
-if (提供元は誰か?) then (Anthropic/OpenAI/Google など公式)
-  :公式 Agent Skill\n（推奨 ★★★★★）<<official>>;
-  :ライセンス・データ取扱を社内規程と照合;
-elseif (Microsoft/AWS など) then (プロダクトベンダー)
-  :ベンダー提供 Agent Skill\n（推奨 ★★★★）<<vendor>>;
-  :製品依存・更新ポリシーを確認;
-else (個人/非公式)
-  :野良 Agent Skill\n（要検証 ★）<<wild>>;
-  :ソースを必ずレビュー\n＋脆弱性スキャン;
-endif
-:情報セキュリティ部門の承認;
-stop
-@enduml
-```
-
+![エージェントスキル導入フロー](images/エージェントスキル導入フロー.png)
 *図: 企業内でAgent Skillを採用する際の安全性判断フロー。*
 
 
@@ -555,7 +504,7 @@ Slack向けアニメーションGIF作成のための知識とユーティリテ
 
 本記事では、Anthropic社が公開しているClaude用Agent Skillsについて、初学者向けに解説しました。Agent Skillsは、AIエージェントに特定のタスクを効率的に実行させるための「知識パッケージ」であり、段階的開示という効率的な仕組みを採用しています。
 
-### 本記事で学んだこと
+### 本記事執筆で学んだこと
 
 **Agent Skillsの基本概念**:
 - Agent Skillsは、指示、スクリプト、リソースをまとめたパッケージ
@@ -581,6 +530,22 @@ Slack向けアニメーションGIF作成のための知識とユーティリテ
 - **ドキュメント処理**: Word、PDF、PowerPoint、Excelの操作
 - **エンタープライズ&コミュニケーション**: ブランドガイドライン、ドキュメント共同作業、社内コミュニケーション、Slack統合
 - **メタスキル**: スキル作成支援
+
+**プロプライエタリライセンスのドキュメントスキル（docx/pdf/pptx/xlsx）の利用経路の制約**:
+
+ドキュメントスキル4種（`docx` / `pdf` / `pptx` / `xlsx`）の`LICENSE.txt`は「**Anthropicが提供するServices上での利用**」を前提にしています。そのため、**Anthropicとの直接契約を経由しない経路では、これらのスキルを利用できない**ことが調査の中で明確になりました。具体的には次のとおりです。
+
+| 利用経路 | 規約の主体 | プロプライエタリスキル（docx/pdf/pptx/xlsx）の利用可否 |
+|---|---|---|
+| Claude.ai / Claude API / Claude Code（Anthropic直契約） | Anthropic | **利用可**（`LICENSE.txt`が想定する標準ルート） |
+| AWS Kiro（Amazon Bedrock経由のClaude） | AWS（Anthropicはサブプロセッサー） | **利用不可**。Bedrockのスキルカタログとして公式配信されていないため、`LICENSE.txt`の「サービス外への持ち出し禁止」「派生物作成禁止」に抵触する |
+| AWS Bedrock のClaudeモデル（直接呼び出し） | AWS | **利用不可**。同上 |
+| Azure（Microsoft Foundry）のClaudeモデル | Microsoft（Anthropicがデータ処理者） | **利用不可**。Foundryのモデルカタログにスキル本体が含まれない |
+| OpenAI Codex / GPT 系自律型AI | OpenAI | **利用不可**。Anthropicとの契約関係がなく、`LICENSE.txt`の「Services」に該当しない |
+| Google Antigravity / Gemini 系自律型AI | Google | **利用不可**。同上 |
+| その他サードパーティ製の自律型AIエージェント | 各事業者 | **利用不可**。Anthropic直契約でない限り、ライセンス上の利用許諾が及ばない |
+
+**つまり、Anthropic公式リポジトリでソース公開されているからといって、任意のAIエージェントに組み込んで業務利用してよいわけではない**、という点が重要な学びでした。Apache 2.0でオープンソース公開されている13スキル（クリエイティブ&デザイン4種、開発&技術4種、エンタープライズ&コミュニケーション4種、メタスキル1種）は経路を問わず商用利用可能ですが、ドキュメントスキル4種に限っては**Anthropic直契約のサービス上でのみ利用可能**である点を、利用開始前に必ず確認してください。
 
 ### 次のステップ
 
@@ -611,13 +576,30 @@ Agent Skillsを実際に活用するための次のステップを紹介しま�
 - 新しいスキルやアップデートを定期的にチェック
 - 他のユーザーの事例やベストプラクティスを学ぶ
 
-### 最後に
+### 最後に：ライセンスに関する注意点
 
 Agent Skillsは、AIエージェントの能力を大幅に拡張し、特定のタスクを効率的に実行するための強力なツールです。本記事で紹介したAnthropicの公式Agent Skillsは、信頼性が高く、企業内でも安心して利用できます。
 
 ただし、実際に利用する際は、必ず自社のセキュリティポリシーに準拠し、適切なリスク評価を行うことが重要です。また、Agent Skillsは継続的に進化しているため、最新の情報を常にチェックし、新しい機能やベストプラクティスを取り入れることをお勧めします。
 
-Agent Skillsを活用することで、AIエージェントとの協働がより効率的かつ効果的になり、開発やビジネスの生産性を大幅に向上させることができます。ぜひ、本記事を参考に、Agent Skillsの世界を探索してみてください。
+そして、Agent Skillsを業務利用する際に**最も注意すべきはライセンス条項**です。本記事の17スキルは、ライセンスの観点で次の2区分に分かれており、利用可能な経路と用途が大きく異なります。
+
+| 区分 | 対象スキル | ライセンス | 主な制約 |
+|---|---|---|---|
+| オープンソース | 13スキル（クリエイティブ&デザイン4種、開発&技術4種、エンタープライズ&コミュニケーション4種、メタスキル1種） | Apache 2.0 | 商用利用・改変・再配布が可能。経路を問わず利用可 |
+| プロプライエタリ | 4スキル（`docx` / `pdf` / `pptx` / `xlsx`） | Anthropic独自（ソース公開のみ） | **Anthropic直契約のサービス上でのみ利用可**。サービス外へのコピー保持・派生物作成・再配布・サブライセンス・リバースエンジニアリングは禁止 |
+
+特に**プロプライエタリライセンスのドキュメントスキル4種は、AWS Kiro / Bedrock、Microsoft Foundry、OpenAI Codex、Google Antigravityなど、Anthropic直契約以外の自律型AIエージェントでは利用できません**。GitHubでソースコードが公開されているからといって、任意のエージェントに組み込んで業務利用すると契約違反になる可能性があります。
+
+業務利用を始める前に、次の3点を必ず確認してください。
+
+1. **使おうとしているスキルのライセンス区分**（Apache 2.0かプロプライエタリか）を、各スキルディレクトリの`LICENSE.txt`で確認する
+2. **利用経路がライセンス条項に適合しているか**（特にプロプライエタリスキルはAnthropic直契約のサービスに限定）を確認する
+3. **不明確な点は自社の法務・情報セキュリティ部門、およびAnthropicの営業窓口に問い合わせる**
+
+ライセンス条項の判断は法的助言ではないため、最終的には専門家のレビューを経て利用することをお勧めします。
+
+Agent Skillsを活用することで、AIエージェントとの協働がより効率的かつ効果的になり、開発やビジネスの生産性を大幅に向上させることができます。ライセンスとセキュリティの観点を押さえたうえで、ぜひ本記事を参考にAgent Skillsの世界を探索してみてください。
 
 **参考リンク**:
 - Anthropic公式サイト: https://www.anthropic.com/
